@@ -19,7 +19,7 @@ class ContentController extends Controller
     {
         $search = $request->query('search');
         $items = Sensor::when($search, function ($q) use ($search) {
-            $q->where('name', 'ilike', "%{$search}%");
+            $q->where('name', 'like', "%{$search}%");
         })->latest()->paginate(10)->withQueryString();
         $stats = [
             'total' => Sensor::count(),
@@ -41,7 +41,7 @@ class ContentController extends Controller
         $search = $request->query('search');
         $items = Project::with('sensor')
             ->when($search, function ($q) use ($search) {
-                $q->where('title', 'ilike', "%{$search}%");
+                $q->where('title', 'like', "%{$search}%");
             })
             ->latest()->paginate(10)->withQueryString();
         $stats = [
@@ -64,7 +64,7 @@ class ContentController extends Controller
     {
         $search = $request->query('search');
         $items = Product::when($search, function ($q) use ($search) {
-            $q->where('name', 'ilike', "%{$search}%");
+            $q->where('name', 'like', "%{$search}%");
         })->latest()->paginate(10)->withQueryString();
         $stats = [
             'total' => Product::count(),
@@ -86,7 +86,7 @@ class ContentController extends Controller
         $search = $request->query('search');
         $items = Video::with('sensor')
             ->when($search, function ($q) use ($search) {
-                $q->where('title', 'ilike', "%{$search}%");
+                $q->where('title', 'like', "%{$search}%");
             })
             ->latest()->paginate(10)->withQueryString();
         $stats = [

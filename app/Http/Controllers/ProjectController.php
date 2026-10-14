@@ -15,7 +15,7 @@ class ProjectController extends Controller
 
         // Search by title
         if ($request->filled('search')) {
-            $query->where('title', 'ilike', '%' . $request->search . '%');
+            $query->where('title', 'like', '%' . $request->search . '%');
         }
 
         // Filter by difficulty

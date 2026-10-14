@@ -13,7 +13,7 @@ class ProductController extends Controller
 
         // Search by name
         if ($request->filled('search')) {
-            $query->where('name', 'ilike', '%' . $request->search . '%');
+            $query->where('name', 'like', '%' . $request->search . '%');
         }
 
         // Filter by category

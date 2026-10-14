@@ -15,8 +15,8 @@ class SensorController extends Controller
         // Search by name or description
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
-                $q->where('name', 'ilike', '%' . $request->search . '%')
-                  ->orWhere('description', 'ilike', '%' . $request->search . '%');
+                $q->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('description', 'like', '%' . $request->search . '%');
             });
         }
 

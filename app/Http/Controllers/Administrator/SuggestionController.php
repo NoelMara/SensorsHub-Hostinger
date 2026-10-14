@@ -17,10 +17,10 @@ class SuggestionController extends Controller
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
-                $q->where('title', 'ilike', "%{$search}%")
-                  ->orWhere('description', 'ilike', "%{$search}%")
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
                   ->orWhereHas('user', function($u) use ($search) {
-                      $u->where('name', 'ilike', "%{$search}%");
+                      $u->where('name', 'like', "%{$search}%");
                   });
             });
         }
