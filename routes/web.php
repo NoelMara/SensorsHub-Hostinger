@@ -98,6 +98,12 @@ Route::middleware('auth')->group(function () {
         $notification->update(['is_read' => true]);
         return response()->json(['success' => true]);
     })->name('notifications.read');
+    
+        Route::get('/notifications/count', function () {
+        return response()->json([
+            'count' => auth()->user()->notifications()->where('is_read', false)->count(),
+        ]);
+    })->name('notifications.count');
 
     Route::post('/notifications/read-all', function () {
         auth()->user()->notifications()->update(['is_read' => true]);

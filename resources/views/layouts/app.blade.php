@@ -250,7 +250,7 @@ header('Expires: 0');
             @endphp
             <a href="{{ route('notifications.index') }}" class="flex items-center gap-3 px-3 py-2 text-base rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white relative">
                 <i class="fas fa-bell w-5 text-center shrink-0"></i><span>Notifications</span>
-                @if($unreadCount > 0)<span class="ml-auto bg-red-500 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-medium">{{ $unreadCount > 99 ? '99+' : $unreadCount }}</span>@endif
+                <span id="notification-badge" class="{{ $unreadCount > 0 ? '' : 'hidden' }} ml-auto bg-red-500 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-medium">{{ $unreadCount > 99 ? '99+' : $unreadCount }}</span>
             </a>
 
             @if(!$isAdministrator)
@@ -586,6 +586,39 @@ header('Expires: 0');
             });
         }
     </script>
+
+    @auth
+    <script>
+        (function () {
+            const badge = document.getElementById('notification-badge');
+            if (!badge) return;
+
+            async function updateCount() {
+                try {
+                    const res = await fetch('{{ route('notifications.count') }}', {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json',
+                        },
+                        credentials: 'same-origin',
+                    });
+                    if (!res.ok) return;
+                    const data = await res.json();
+                    const count = data.count || 0;
+
+                    if (count > 0) {
+                        badge.textContent = count > 99 ? '99+' : count;
+                        badge.classList.remove('hidden');
+                    } else {
+                        badge.classList.add('hidden');
+                    }
+                } catch (e) { /* silent */ }
+            }
+
+            setInterval(updateCount, 15000);
+        })();
+    </script>
+    @endauth
 
     @stack('scripts')
 
