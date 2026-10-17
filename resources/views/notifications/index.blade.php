@@ -95,7 +95,7 @@
     @else
         {{-- Empty State --}}
         <div class="text-center py-20 border border-dashed border-gray-200 dark:border-gray-800 rounded-lg">
-            <i class="fas fa-bell-slash text-5xl text-emerald-500/50 mb-4"></i>
+            <i class="fas fa-bell-slash text-5xl text-emerald-600/70 dark:text-emerald-400/60 mb-4"></i>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">No notifications</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400">
                 You're all caught up.
