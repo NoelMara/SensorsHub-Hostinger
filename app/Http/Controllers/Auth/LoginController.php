@@ -40,7 +40,7 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        $key = 'login:' . $request->ip();
+        $key = 'login:' . $request->ip() . ':' . $credentials['email'];
 
         if (RateLimiter::tooManyAttempts($key, 5)) {
             $seconds = RateLimiter::availableIn($key);
@@ -50,14 +50,15 @@ class LoginController extends Controller
         }
 
         $user = User::where('email', $credentials['email'])->first();
-        if ($user && $user->isBanned()) {
-            $banMsg = $user->ban_until 
-                ? 'Your account is banned until ' . $user->ban_until->format('M d, Y') . '.'
-                : 'Your account has been permanently banned.';
-            return back()->withErrors(['email' => $banMsg])->onlyInput('email');
-        }
 
         if ($user && Hash::check($credentials['password'], $user->password)) {
+            if ($user->isBanned()) {
+                $banMsg = $user->ban_until
+                    ? 'Your account is banned until ' . $user->ban_until->format('M d, Y') . '.'
+                    : 'Your account has been permanently banned.';
+                return back()->withErrors(['email' => $banMsg])->onlyInput('email');
+            }
+
             if ($user->isAdministrator()) {
                 return back()->withErrors([
                     'email' => 'These credentials do not match our records.',
@@ -93,7 +94,7 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        $key = 'login:' . $request->ip();
+        $key = 'login:' . $request->ip() . ':' . $credentials['email'];
 
         if (RateLimiter::tooManyAttempts($key, 5)) {
             $seconds = RateLimiter::availableIn($key);
@@ -103,12 +104,6 @@ class LoginController extends Controller
         }
 
         $user = User::where('email', $credentials['email'])->first();
-        if ($user && $user->isBanned()) {
-            $banMsg = $user->ban_until 
-                ? 'Your account is banned until ' . $user->ban_until->format('M d, Y') . '.'
-                : 'Your account has been permanently banned.';
-            return back()->withErrors(['email' => $banMsg])->onlyInput('email');
-        }
 
         if (!$user || !$user->isAdministrator() || !Hash::check($credentials['password'], $user->password)) {
             RateLimiter::hit($key, 120);
@@ -116,6 +111,13 @@ class LoginController extends Controller
             return back()->withErrors([
                 'email' => 'The provided Administrator credentials do not match our records.',
             ])->onlyInput('email');
+        }
+
+        if ($user->isBanned()) {
+            $banMsg = $user->ban_until
+                ? 'Your account is banned until ' . $user->ban_until->format('M d, Y') . '.'
+                : 'Your account has been permanently banned.';
+            return back()->withErrors(['email' => $banMsg])->onlyInput('email');
         }
 
         RateLimiter::clear($key);

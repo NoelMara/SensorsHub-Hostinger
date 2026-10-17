@@ -95,11 +95,12 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->midd
 // ─────────────────────────────────────────────────────────────────────────────
 Route::middleware('auth')->group(function () {
     Route::post('/notifications/{notification}/read', function (\App\Models\Notification $notification) {
+        abort_unless($notification->user_id === auth()->id(), 403);
         $notification->update(['is_read' => true]);
         return response()->json(['success' => true]);
     })->name('notifications.read');
     
-        Route::get('/notifications/count', function () {
+    Route::get('/notifications/count', function () {
         return response()->json([
             'count' => auth()->user()->notifications()->where('is_read', false)->count(),
         ]);
@@ -107,7 +108,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/notifications/read-all', function () {
         auth()->user()->notifications()->update(['is_read' => true]);
-        return back();
+        return back()->with('success', 'All notifications marked as read.');
     })->name('notifications.read-all');
 
     Route::get('/notifications', function () {

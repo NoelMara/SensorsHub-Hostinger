@@ -170,7 +170,7 @@ class ContentController extends Controller
             ->with('success', $this->singularLabelFor($type) . ' updated successfully.');
     }
 
-   public function destroy(string $type, int $id)
+    public function destroy(string $type, int $id)
     {
         $this->ensureValidType($type);
         $item = $this->findItem($type, $id);
@@ -259,13 +259,11 @@ class ContentController extends Controller
 
         // Only set slug on create — keep it stable on update
         if ($item === null) {
-            if (in_array($type, ['sensors', 'products'], true)) {
-                $data['slug'] = Str::slug($data['name']);
-            }
+            $slugSource = in_array($type, ['sensors', 'products'], true)
+                ? $data['name']
+                : $data['title'];
 
-            if (in_array($type, ['projects', 'videos'], true)) {
-                $data['slug'] = Str::slug($data['title']);
-            }
+            $data['slug'] = $this->uniqueSlug($this->modelFor($type), Str::slug($slugSource));
         }
 
         if ($type === 'videos') {
@@ -277,9 +275,9 @@ class ContentController extends Controller
                 try {
                     $cloudinary = new \Cloudinary\Cloudinary([
                         'cloud' => [
-                            'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                            'api_key'    => env('CLOUDINARY_API_KEY'),
-                            'api_secret' => env('CLOUDINARY_API_SECRET'),
+                            'cloud_name' => config('cloudinary.cloud_name'),
+                            'api_key'    => config('cloudinary.api_key'),
+                            'api_secret' => config('cloudinary.api_secret'),
                         ],
                         'url' => ['secure' => true],
                     ]);
@@ -296,10 +294,10 @@ class ContentController extends Controller
             }
         }
 
-        $data['is_active'] = $request->has('is_active');
+        $data['is_active'] = $request->boolean('is_active');
 
         if (in_array($type, ['projects', 'videos'], true)) {
-            $data['is_featured'] = $request->has('is_featured');
+            $data['is_featured'] = $request->boolean('is_featured');
         }
 
         return $data;
@@ -307,8 +305,24 @@ class ContentController extends Controller
 
     private function extractYouTubeId(string $url): ?string
     {
-        preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\/?]+)/', $url, $matches);
+        preg_match(
+            '/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/',
+            $url,
+            $matches
+        );
 
         return $matches[1] ?? null;
+    }
+
+    private function uniqueSlug(string $modelClass, string $slug): string
+    {
+        $original = $slug;
+        $i = 2;
+
+        while ($modelClass::where('slug', $slug)->exists()) {
+            $slug = $original . '-' . $i++;
+        }
+
+        return $slug;
     }
 }
