@@ -116,16 +116,17 @@ header('Expires: 0');
                         <span class="block text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight">SensorsHub</span>
                     </a>
                 </div>
+
                 <div class="hidden xl:flex items-center gap-6">
-                    <a href="{{ route('home') }}" class="text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition">Home</a>
-                    <a href="{{ route('sensors.index') }}" class="text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition">Sensors</a>
-                    <a href="{{ route('projects.index') }}" class="text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition">Projects</a>
-                    <a href="{{ route('videos.index') }}" class="text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition">Tutorials</a>
-                    <a href="{{ route('suggestions.community') }}" class="text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition">Community</a>
-                    <a href="{{ route('shop.index') }}" class="text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition">Shop</a>
+                    <a href="{{ route('home') }}" class="text-base transition {{ request()->routeIs('home') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">Home</a>
+                    <a href="{{ route('sensors.index') }}" class="text-base transition {{ request()->routeIs('sensors.*') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">Sensors</a>
+                    <a href="{{ route('projects.index') }}" class="text-base transition {{ request()->routeIs('projects.*') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">Projects</a>
+                    <a href="{{ route('videos.index') }}" class="text-base transition {{ request()->routeIs('videos.*') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">Tutorials</a>
+                    <a href="{{ route('suggestions.community') }}" class="text-base transition {{ request()->routeIs('suggestions.community') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">Community</a>
+                    <a href="{{ route('shop.index') }}" class="text-base transition {{ request()->routeIs('shop.*') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">Shop</a>
                     <a href="https://sensors-hub-simulator.vercel.app/" target="_blank" class="inline-flex items-center gap-1 text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition">Simulation <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></a>
                     <div class="w-px h-5 bg-gray-200 dark:bg-gray-800"></div>
-                    <a href="{{ route('login') }}" class="text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition">Login</a>
+                    <a href="{{ route('login') }}" class="text-sm transition {{ request()->routeIs('login') ? 'text-gray-900 dark:text-white font-bold' : 'font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">Login</a>
                     <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-4 py-1.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition">
                         Register
                     </a>
@@ -133,6 +134,7 @@ header('Expires: 0');
                         <i class="fas fa-moon dark-icon-moon w-4 text-center"></i><i class="fas fa-sun dark-icon-sun w-4 text-center" style="display: none;"></i>
                     </button>
                 </div>
+
                 <div class="xl:hidden flex items-center">
                     <button id="mobileMenuButton" class="text-gray-700 dark:text-gray-300 p-2 -mr-2"><i class="fas fa-bars text-2xl"></i></button>
                 </div>
@@ -140,15 +142,15 @@ header('Expires: 0');
         </div>
         <div id="mobileMenu" class="hidden xl:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
             <div class="px-4 pt-2 pb-4 space-y-1">
-                <a href="{{ route('home') }}" class="flex items-center gap-3 px-3 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"><i class="fas fa-home w-5"></i> Home</a>
-                <a href="{{ route('sensors.index') }}" class="flex items-center gap-3 px-3 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"><i class="fas fa-microchip w-5"></i> Sensors</a>
-                <a href="{{ route('projects.index') }}" class="flex items-center gap-3 px-3 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"><i class="fas fa-folder-open w-5"></i> Projects</a>
-                <a href="{{ route('videos.index') }}" class="flex items-center gap-3 px-3 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"><i class="fas fa-play-circle w-5"></i> Tutorials</a>
-                <a href="{{ route('suggestions.community') }}" class="flex items-center gap-3 px-3 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"><i class="fas fa-comments w-5"></i> Community</a>
-                <a href="{{ route('shop.index') }}" class="flex items-center gap-3 px-3 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"><i class="fas fa-store w-5"></i> Shop</a>
+                <a href="{{ route('home') }}" class="flex items-center gap-3 px-3 py-2 text-base rounded-lg {{ request()->routeIs('home') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}"><i class="fas fa-home w-5"></i> Home</a>
+                <a href="{{ route('sensors.index') }}" class="flex items-center gap-3 px-3 py-2 text-base rounded-lg {{ request()->routeIs('sensors.*') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}"><i class="fas fa-microchip w-5"></i> Sensors</a>
+                <a href="{{ route('projects.index') }}" class="flex items-center gap-3 px-3 py-2 text-base rounded-lg {{ request()->routeIs('projects.*') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}"><i class="fas fa-folder-open w-5"></i> Projects</a>
+                <a href="{{ route('videos.index') }}" class="flex items-center gap-3 px-3 py-2 text-base rounded-lg {{ request()->routeIs('videos.*') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}"><i class="fas fa-play-circle w-5"></i> Tutorials</a>
+                <a href="{{ route('suggestions.community') }}" class="flex items-center gap-3 px-3 py-2 text-base rounded-lg {{ request()->routeIs('suggestions.community') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}"><i class="fas fa-comments w-5"></i> Community</a>
+                <a href="{{ route('shop.index') }}" class="flex items-center gap-3 px-3 py-2 text-base rounded-lg {{ request()->routeIs('shop.*') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}"><i class="fas fa-store w-5"></i> Shop</a>
                 <a href="https://sensors-hub-simulator.vercel.app/" target="_blank" class="flex items-center gap-3 px-3 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"><i class="fas fa-flask w-5"></i> Simulation <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></a>
                 <div class="border-t border-gray-200 dark:border-gray-800 my-2"></div>
-                <a href="{{ route('login') }}" class="flex items-center gap-3 px-3 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"><i class="fas fa-key w-5"></i> Login</a>
+                <a href="{{ route('login') }}" class="flex items-center gap-3 px-3 py-2 text-base rounded-lg {{ request()->routeIs('login') ? 'text-gray-900 dark:text-white font-bold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}"><i class="fas fa-key w-5"></i> Login</a>
                 <a href="{{ route('register') }}" class="flex items-center gap-3 px-3 py-2 text-base font-medium text-white dark:text-gray-900 bg-gray-900 dark:bg-white rounded-lg"><i class="fas fa-user-plus w-5 text-center shrink-0"></i> Register</a>
                 <button id="mobileDarkModeToggle" class="flex items-center gap-3 w-full px-3 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
                     <i class="fas fa-moon dark-icon-moon w-5 text-center shrink-0"></i><i class="fas fa-sun dark-icon-sun w-5 text-center shrink-0" style="display: none;"></i> Dark Mode
