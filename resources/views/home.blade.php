@@ -82,7 +82,7 @@
                     </p>
 
                     <h1 class="text-5xl sm:text-6xl font-semibold text-gray-900 dark:text-white leading-[1.05] tracking-tight mb-8">
-                        Learn sensors. TEST DEPLOY <br>
+                        Learn sensors.<br>
                         <span class="hf-grad">Build real circuits.</span>
                     </h1>
 
