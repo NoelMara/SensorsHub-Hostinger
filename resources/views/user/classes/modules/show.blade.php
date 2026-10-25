@@ -60,7 +60,7 @@
                 </h2>
             </div>
 
-            <a href="{{ $module->file_path }}" download
+            <a href="{{ route('dashboard.classes.modules.download', [$class, $module]) }}"
                @click="if(!downloading){ downloading = true; cooldown = 5; timer = setInterval(() => { cooldown--; if(cooldown <= 0){ clearInterval(timer); downloading = false } }, 1000) }"
                :class="downloading ? 'pointer-events-none opacity-60' : ''"
                class="flex items-center gap-4 border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800/40 transition group">

@@ -194,6 +194,7 @@ Route::middleware(['auth.redirect'])->prefix('dashboard')->name('dashboard.')->g
     // Opens classroom content such as announcements, modules, assessments, and quizzes.
     Route::get('/classes/{class}', [ClassroomController::class, 'studentShow'])->name('classes.show');
     Route::get('/classes/{class}/modules/{module}', [ModuleController::class, 'show'])->name('classes.modules.show');
+    Route::get('/classes/{class}/modules/{module}/download', [ModuleController::class, 'download'])->name('classes.modules.download');
     Route::get('/classes/{class}/assessments/{assessment}', [AssessmentController::class, 'show'])->name('classes.assessments.show');
     Route::post('/classes/{class}/assessments/{assessment}/submit', [AssessmentController::class, 'submit'])->name('classes.assessments.submit');
     Route::get('/classes/{class}/announcements', [AnnouncementController::class, 'studentIndex'])->name('classes.announcements.index');

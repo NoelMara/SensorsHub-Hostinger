@@ -243,4 +243,35 @@ class ModuleController extends Controller
         $modules = $class->modules()->where('is_published', true)->orderBy('order')->paginate(10);
         return view('user.classes.modules.index', compact('class', 'modules'));
     }
+
+    public function download(Classroom $class, Module $module)
+    {
+        if ($module->class_id !== $class->id) {
+            abort(404);
+        }
+
+        if (!$module->file_path) {
+            abort(404);
+        }
+
+        $isAdmin = auth()->user()->isAdministrator();
+        $isInstructor = auth()->user()->isInstructor() && $class->instructor_id === auth()->id();
+
+        if (!$module->is_published && !$isAdmin && !$isInstructor) {
+            abort(404);
+        }
+
+        if (!$isAdmin && !$isInstructor) {
+            $enrolled = $class->students()
+                ->where('user_id', auth()->id())
+                ->wherePivot('status', 'approved')
+                ->exists();
+
+            if (!$enrolled) {
+                abort(403);
+            }
+        }
+
+        return Storage::disk('public')->download($module->file_path, $module->file_name ?? 'module-file');
+    }
 }
