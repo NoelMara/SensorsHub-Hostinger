@@ -104,7 +104,7 @@
                             </a>
                             <form action="{{ route('administrator.backup.delete', $name) }}" method="POST"
                                 onsubmit="return confirm('Delete this backup?');" class="inline">
-                                @csrf @method('DELETE')
+                                @csrf
                                 <button type="submit"
                                     class="inline-flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 hover:border-red-500 hover:text-red-500 dark:hover:border-red-500 dark:hover:text-red-500 transition"
                                     title="Delete">

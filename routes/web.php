@@ -344,7 +344,7 @@ Route::middleware(['auth', 'administrator'])->prefix('administrator')->name('adm
     })->name('backup');
     Route::get('/backup/download', [AdministratorDashboardController::class, 'backup'])->name('backup.download');
     Route::get('/backup/download/{filename}', [AdministratorDashboardController::class, 'downloadBackup'])->name('backup.download-file');
-    Route::delete('/backup/delete/{filename}', [AdministratorDashboardController::class, 'deleteBackup'])->name('backup.delete');
+    Route::post('/backup/delete/{filename}', [AdministratorDashboardController::class, 'deleteBackup'])->name('backup.delete');
 
     // Lets the administrator create, edit, remove, assign roles, warn, ban, and unban users.
     Route::get('/users', [AdministratorUserController::class, 'index'])->name('users.index');
