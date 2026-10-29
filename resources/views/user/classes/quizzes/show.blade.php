@@ -59,7 +59,7 @@
                     <p class="text-xs font-medium uppercase tracking-[0.15em] text-gray-500 dark:text-gray-400 mb-3">
                         Description
                     </p>
-                    <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+                    <p class="text-base text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
                         {{ $quiz->description }}
                     </p>
                 </div>
@@ -70,7 +70,7 @@
                     <p class="text-xs font-medium uppercase tracking-[0.15em] text-gray-500 dark:text-gray-400 mb-3">
                         Instructions
                     </p>
-                    <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+                    <p class="text-base text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
                         {{ $quiz->instructions }}
                     </p>
                 </div>
@@ -188,7 +188,7 @@
                         <span class="text-xs font-semibold text-gray-400 dark:text-gray-600 tabular-nums flex-shrink-0 mt-0.5">
                             Q{{ $index + 1 }}
                         </span>
-                        <h3 class="text-sm font-medium text-gray-900 dark:text-white">
+                        <h3 class="text-base font-medium text-gray-900 dark:text-white">
                             {{ $question->question }}
                         </h3>
                     </div>
@@ -426,7 +426,7 @@
                                 <span class="text-xs font-semibold text-gray-400 dark:text-gray-600 tabular-nums flex-shrink-0 mt-0.5">
                                     Q{{ $index + 1 }}
                                 </span>
-                                <h3 class="text-sm font-medium text-gray-900 dark:text-white">
+                                <h3 class="text-base font-medium text-gray-900 dark:text-white">
                                     {{ $question->question }}
                                 </h3>
                             </div>

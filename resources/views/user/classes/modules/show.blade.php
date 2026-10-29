@@ -25,7 +25,7 @@
     {{-- Content --}}
     <section class="border border-gray-200 dark:border-gray-800 rounded-lg p-6 sm:p-8 mb-8">
         @if($module->content)
-            <div class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+            <div class="text-base text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
                 {{ $module->content }}
             </div>
         @else

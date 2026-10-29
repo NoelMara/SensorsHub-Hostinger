@@ -92,7 +92,7 @@
         @if($class->description)
             <div class="mt-5 pt-5 border-t border-gray-100 dark:border-gray-800">
                 <p class="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">Description</p>
-                <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{{ $class->description }}</p>
+                <p class="text-base text-gray-600 dark:text-gray-400 leading-relaxed">{{ $class->description }}</p>
             </div>
         @endif
     </section>
