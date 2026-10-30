@@ -189,7 +189,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($featuredSensors as $sensor)
-                <a href="{{ route('sensors.show', $sensor->slug) }}" class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden hover:border-emerald-500 dark:hover:border-emerald-500 transition flex flex-col group">
+                <a href="{{ route('sensors.show', $sensor->slug) }}" class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden hover:border-emerald-500 hover:bg-emerald-50/30 dark:hover:border-emerald-500 dark:hover:bg-emerald-950/20 hover:ring-2 hover:ring-emerald-500/40 dark:hover:ring-emerald-500/60 hover:shadow-lg hover:shadow-emerald-500/20 dark:hover:shadow-emerald-500/30 transition flex flex-col group">
                     <div class="aspect-[16/10] bg-gray-100 dark:bg-gray-900 overflow-hidden">
                         @if($sensor->image)
                             <img src="{{ Str::startsWith($sensor->image, ['http://', 'https://']) ? $sensor->image : (Str::startsWith($sensor->image, ['images/', '/images/']) ? asset($sensor->image) : asset('storage/' . $sensor->image)) }}" alt="{{ $sensor->name }}" class="w-full h-full object-cover" loading="lazy">
@@ -230,7 +230,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 @foreach($featuredProjects as $project)
-                <a href="{{ route('projects.show', $project->slug) }}" class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6 hover:border-emerald-500 dark:hover:border-emerald-500 transition flex flex-col group">
+                <a href="{{ route('projects.show', $project->slug) }}" class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6 hover:border-emerald-500 hover:bg-emerald-50/30 dark:hover:border-emerald-500 dark:hover:bg-emerald-950/20 hover:ring-2 hover:ring-emerald-500/40 dark:hover:ring-emerald-500/60 hover:shadow-lg hover:shadow-emerald-500/20 dark:hover:shadow-emerald-500/30 transition flex flex-col group">
                     <div class="flex flex-wrap items-center gap-3 mb-4">
                         <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                             {{ $project->difficulty }}
@@ -270,7 +270,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @foreach($latestVideos as $video)
-                <div class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden hover:border-emerald-500 dark:hover:border-emerald-500 transition flex flex-col group">
+                <div class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden hover:border-emerald-500 hover:bg-emerald-50/30 dark:hover:border-emerald-500 dark:hover:bg-emerald-950/20 hover:ring-2 hover:ring-emerald-500/40 dark:hover:ring-emerald-500/60 hover:shadow-lg hover:shadow-emerald-500/20 dark:hover:shadow-emerald-500/30 transition flex flex-col group">
                     <button type="button" onclick="openVideoModal('{{ $video->youtube_id }}')" class="text-left block w-full">
                         <div class="relative aspect-video bg-gray-100 dark:bg-gray-900 overflow-hidden">
                             @if($video->youtube_id)
