@@ -202,7 +202,7 @@
                     <div class="p-5 flex-1 flex flex-col">
                         <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2">{{ $sensor->name }}</h3>
                         <p class="text-sm text-gray-600 dark:text-gray-400 flex-1 line-clamp-2 mb-4">{{ Str::limit($sensor->description, 90) }}</p>
-                        <span class="text-sm font-medium text-gray-900 dark:text-white inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                        <span class="text-sm font-medium text-gray-900 dark:text-white inline-flex items-center gap-1 group-hover:gap-2 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-all">
                             Learn more <i class="fas fa-arrow-right text-[10px]"></i>
                         </span>
                     </div>
@@ -242,7 +242,7 @@
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 line-clamp-2">{{ $project->title }}</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400 flex-1 line-clamp-2 mb-4">{{ Str::limit($project->description, 120) }}</p>
-                    <span class="text-sm font-medium text-gray-900 dark:text-white inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                    <span class="text-sm font-medium text-gray-900 dark:text-white inline-flex items-center gap-1 group-hover:gap-2 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-all">
                         View project <i class="fas fa-arrow-right text-[10px]"></i>
                     </span>
                 </a>
@@ -289,7 +289,7 @@
                         <h3 class="font-semibold text-sm text-gray-900 dark:text-white line-clamp-2 mb-2">{{ $video->title }}</h3>
                         <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 flex-1 mb-3">{{ Str::limit($video->description, 70) }}</p>
 
-                        <a href="{{ $video->youtube_link ?? 'https://www.youtube.com/watch?v=' . $video->youtube_id }}" target="_blank" class="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white inline-flex items-center gap-1 transition">
+                        <a href="{{ $video->youtube_link ?? 'https://www.youtube.com/watch?v=' . $video->youtube_id }}" target="_blank" class="text-xs text-gray-500 dark:text-gray-400 hover:text-emerald-500 dark:hover:text-emerald-400 inline-flex items-center gap-1 transition">
                             Watch on YouTube
                             <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
                         </a>
