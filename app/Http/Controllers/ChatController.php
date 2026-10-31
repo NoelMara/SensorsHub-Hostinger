@@ -104,7 +104,12 @@ class ChatController extends Controller
             }
 
             if ($res->successful()) {
-                return $res->json();
+                $json = $res->json();
+                
+                // Log which model actually answered
+                \Log::info("AI answered using: " . ($json['modelVersion'] ?? $model));
+                
+                return $json;
             }
 
             \Log::warning("Gemini {$model} failed", [
