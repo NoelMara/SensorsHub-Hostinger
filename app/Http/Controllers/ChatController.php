@@ -25,7 +25,7 @@ class ChatController extends Controller
         }
         $message = mb_substr($message, 0, 500);
 
-        // Per-user limits: 5 messages per minute, 40 per day
+        // Per-user limits: 5 messages per minute, 20 per day
         $userId = auth()->id();
 
         if (RateLimiter::tooManyAttempts("chat-min:$userId", 5)) {
@@ -34,7 +34,7 @@ class ChatController extends Controller
             ]);
         }
 
-        if (RateLimiter::tooManyAttempts("chat-day:$userId", 40)) {
+        if (RateLimiter::tooManyAttempts("chat-day:$userId", 20)) {
             return response()->json([
                 'reply' => '⚠️ You reached your daily AI chat limit. Please try again tomorrow.'
             ]);
