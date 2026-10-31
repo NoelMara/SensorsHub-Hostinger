@@ -49,6 +49,11 @@ class ChatController extends Controller
         $data = $response->json();
 
         if (!$response->successful()) {
+            \Log::error('Gemini API failed', [
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+
             return response()->json([
                 'reply' => '⚠️ AI service is temporarily unavailable. Please try again later.'
             ]);
