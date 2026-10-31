@@ -25,7 +25,9 @@ class ChatController extends Controller
 - When providing code, ALWAYS put it in a code block with proper indentation and line breaks.
 - If unrelated to electronics/microcontrollers/sensors, say 'I can only help with electronics topics.'";
 
-        $response = Http::withHeaders([
+        $response = Http::withOptions([
+            'verify' => false,
+        ])->withHeaders([
             'Content-Type' => 'application/json',
         ])->post(
             'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=' . env('GEMINI_API_KEY'),
