@@ -107,7 +107,7 @@ class ChatController extends Controller
                 $json = $res->json();
                 
                 // Log which model actually answered
-                \Log::info("AI answered using: " . ($json['modelVersion'] ?? $model));
+                \Log::warning("AI answered using: " . ($json['modelVersion'] ?? $model));
                 
                 return $json;
             }
