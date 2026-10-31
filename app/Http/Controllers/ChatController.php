@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\RateLimiter;
 
 class ChatController extends Controller
 {
@@ -17,6 +18,30 @@ class ChatController extends Controller
         }
 
         $message = trim($request->input('message'));
+
+        // Ignore empty messages and cap the length
+        if ($message === '') {
+            return response()->json(['reply' => 'Please type a question first.']);
+        }
+        $message = mb_substr($message, 0, 500);
+
+        // Per-user limits: 5 messages per minute, 40 per day
+        $userId = auth()->id();
+
+        if (RateLimiter::tooManyAttempts("chat-min:$userId", 5)) {
+            return response()->json([
+                'reply' => '⏳ Slow down! Please wait a minute before asking again.'
+            ]);
+        }
+
+        if (RateLimiter::tooManyAttempts("chat-day:$userId", 40)) {
+            return response()->json([
+                'reply' => '⚠️ You reached your daily AI chat limit. Please try again tomorrow.'
+            ]);
+        }
+
+        RateLimiter::hit("chat-min:$userId", 60);
+        RateLimiter::hit("chat-day:$userId", 86400);
 
         $systemPrompt = "You are SensorsHub AI. Rules:
 - For greetings like 'hello' or 'hi', respond with a friendly one-sentence greeting and ask what they want to learn.
@@ -35,7 +60,7 @@ class ChatController extends Controller
                 ]
             ],
             'generationConfig' => [
-                'maxOutputTokens' => 300,
+                'maxOutputTokens' => 1024,
             ],
         ];
 
@@ -55,7 +80,7 @@ class ChatController extends Controller
 
     private function callGemini(array $payload): ?array
     {
-        // Fallback order: try fastest/working models first
+        // Tries each model in order until one works
         $models = [
             'gemini-3.5-flash-lite',
             'gemini-flash-lite-latest',
@@ -68,7 +93,7 @@ class ChatController extends Controller
         foreach ($models as $model) {
             try {
                 $res = Http::withOptions(['verify' => false])
-                    ->timeout(10) // Wait max 10 seconds before giving up
+                    ->timeout(8)
                     ->post(
                         "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}",
                         $payload
@@ -82,19 +107,17 @@ class ChatController extends Controller
                 return $res->json();
             }
 
-            // Log the failure
             \Log::warning("Gemini {$model} failed", [
                 'status' => $res->status(),
                 'body' => $res->body(),
             ]);
 
-            // If it's an auth error (403/401) or bad request (400), 
-            // trying another model won't fix it. Stop immediately.
+            // Auth error or bad request: another model won't fix it, so stop
             if (in_array($res->status(), [400, 401, 403])) {
                 break;
             }
-            
-            // If it's 404, 429, 500, 503... fall through and try the next model
+
+            // 404, 429, 500, 503... try the next model
         }
 
         return null; // All models failed
