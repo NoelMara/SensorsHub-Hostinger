@@ -349,14 +349,8 @@ header('Expires: 0');
                         Connect
                     </p>
                     <div class="flex items-center gap-2">
-                        <a href="#" class="w-9 h-9 inline-flex items-center justify-center rounded-lg border border-gray-800 text-gray-500 hover:text-white hover:border-gray-600 transition" aria-label="YouTube">
+                        <a href="https://www.youtube.com/@Sensorshub" target="_blank" rel="noopener noreferrer" class="w-9 h-9 inline-flex items-center justify-center rounded-lg border border-gray-800 text-gray-500 hover:text-white hover:border-gray-600 transition" aria-label="YouTube">
                             <i class="fab fa-youtube text-sm"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 inline-flex items-center justify-center rounded-lg border border-gray-800 text-gray-500 hover:text-white hover:border-gray-600 transition" aria-label="Facebook">
-                            <i class="fab fa-facebook-f text-sm"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 inline-flex items-center justify-center rounded-lg border border-gray-800 text-gray-500 hover:text-white hover:border-gray-600 transition" aria-label="Discord">
-                            <i class="fab fa-discord text-sm"></i>
                         </a>
                     </div>
                 </div>
