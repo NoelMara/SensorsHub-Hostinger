@@ -257,13 +257,23 @@ class ContentController extends Controller
             ]),
         };
 
-        // Only set slug on create — keep it stable on update
-        if ($item === null) {
-            $slugSource = in_array($type, ['sensors', 'products'], true)
-                ? $data['name']
-                : $data['title'];
+        // Set slug on create, OR update it if the name/title changed
+        $slugSource = in_array($type, ['sensors', 'products'], true)
+            ? $data['name']
+            : $data['title'];
 
-            $data['slug'] = $this->uniqueSlug($this->modelFor($type), Str::slug($slugSource));
+        $nameChanged = false;
+        if ($item !== null) {
+            $currentName = in_array($type, ['sensors', 'products'], true) ? $item->name : $item->title;
+            $nameChanged = $currentName !== $slugSource;
+        }
+
+        if ($item === null || $nameChanged) {
+            $data['slug'] = $this->uniqueSlug(
+                $this->modelFor($type), 
+                Str::slug($slugSource), 
+                $item?->id
+            );
         }
 
         if ($type === 'videos') {
@@ -314,12 +324,12 @@ class ContentController extends Controller
         return $matches[1] ?? null;
     }
 
-    private function uniqueSlug(string $modelClass, string $slug): string
+    private function uniqueSlug(string $modelClass, string $slug, ?int $ignoreId = null): string
     {
         $original = $slug;
         $i = 2;
 
-        while ($modelClass::where('slug', $slug)->exists()) {
+        while ($modelClass::where('slug', $slug)->when($ignoreId, fn($q) => $q->where('id', '!=', $ignoreId))->exists()) {
             $slug = $original . '-' . $i++;
         }
 
