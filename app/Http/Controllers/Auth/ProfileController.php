@@ -35,9 +35,9 @@ class ProfileController extends Controller
         if ($request->hasFile('profile_image')) {
             $cloudinary = new \Cloudinary\Cloudinary([
                 'cloud' => [
-                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                    'api_key'    => env('CLOUDINARY_API_KEY'),
-                    'api_secret' => env('CLOUDINARY_API_SECRET'),
+                    'cloud_name' => config('cloudinary.cloud_name'),
+                    'api_key'    => config('cloudinary.api_key'),
+                    'api_secret' => config('cloudinary.api_secret'),
                 ],
                 'url' => ['secure' => true],
             ]);
