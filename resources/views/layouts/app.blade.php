@@ -8,6 +8,7 @@ header('Expires: 0');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SensorsHub is an educational platform for discovering sensors, exploring projects, and learning electronics hands-on.">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'SensorsHub') - Learn Sensors. Build Projects. Share Ideas.</title>
     <link rel="icon" type="image/png" href="{{ asset('sensorshub_logo.png') }}">
